@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Questionnaire</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .question { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .summary { margin: 20px 0; padding: 20px; border: 2px solid #4CAF50; background-color: #f0f8f0; }
+        .summary-item { margin: 10px 0; padding: 10px; border-left: 3px solid #4CAF50; background-color: white; }
+        input[type="text"], select { width: 100%; padding: 8px; margin: 10px 0; }
+        input[type="submit"] { background-color: #4CAF50; color: white; padding: 10px 20px; cursor: pointer; }
+        input[type="submit"]:hover { background-color: #45a049; }
+    </style>
+</head>
+
+<body>
+    <h1>Questionnaire Médical</h1>
+    
+    <% if (typeof message !== 'undefined') { %>
+        <p><strong><%= message %></strong></p>
+    <% } %>
+
+    <% if (typeof showSummary !== 'undefined' && showSummary) { %>
+        <!-- Affichage du résumé final -->
+        <div class="summary">
+            <h2>📋 Résumé de vos réponses</h2>
+            <div class="summary-item">
+                <strong>Nom :</strong> <%= nom %> <%= prenom %> | <strong>Age :</strong> <%= age %>
+            </div>
+            <% if (typeof responses !== 'undefined') { %>
+                <% if (responses.q1) { %>
+                    <div class="summary-item">
+                        <strong>Question 1 : Quel est votre couleur préférée ?</strong><br>
+                        Réponse : <%= responses.q1 %>
+                    </div>
+                <% } %>
+                <% if (responses.q2) { %>
+                    <div class="summary-item">
+                        <strong>Question 2 : Quel jour de la semaine préférez vous ?</strong><br>
+                        Réponse : <%= responses.q2 %>
+                    </div>
+                <% } %>
+                <% if (responses.q3) { %>
+                    <div class="summary-item">
+                        <strong>Question 3 : <% if (['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'].includes(responses.q2)) { %>Quel est votre emploi ?<% } else { %>Quel est votre restaurant préféré ?<% } %></strong><br>
+                        Réponse : <%= responses.q3 %>
+                    </div>
+                <% } %>
+            <% } %>
+            
+            <!-- Formulaire pour envoyer par mail -->
+            <form action="/submit-questionnaire" method="POST" style="margin-top: 20px;">
+                <input type="hidden" name="nom" value="<%= nom %>">
+                <input type="hidden" name="prenom" value="<%= prenom %>">
+                <input type="hidden" name="age" value="<%= age %>">
+                <input type="hidden" name="responses" value="<%= JSON.stringify(typeof responses !== 'undefined' ? responses : {}) %>">
+                <input type="submit" value="✉️ Valider mes réponses" style="background-color: #2196F3; padding: 12px 30px; font-size: 16px;">
+            </form>
+        </div>
+    <% } else if (typeof currentQuestion !== 'undefined' && currentQuestion) { %>
+        <!-- Affichage de la question en cours -->
+        <div class="question">
+            <h2><%= currentQuestion.label %></h2>
+            
+            <form action="/question-response" method="POST">
+                <input type="hidden" name="questionId" value="<%= currentQuestion.id %>">
+                <input type="hidden" name="nom" value="<%= nom %>">
+                <input type="hidden" name="prenom" value="<%= prenom %>">
+                <input type="hidden" name="age" value="<%= age %>">
+                <input type="hidden" name="responsesJSON" value="<%= JSON.stringify(typeof responses !== 'undefined' ? responses : {}) %>">
+                
+                <% if (currentQuestion.type === 'text') { %>
+                    <label for="response">Votre réponse :</label>
+                    <input type="text" id="response" name="response" placeholder="Entrez votre réponse" required>
+                <% } else if (currentQuestion.type === 'multiple') { %>
+                    <label>Sélectionnez une option :</label><br>
+                    <% currentQuestion.options.forEach(option => { %>
+                        <input type="radio" id="<%= option %>" name="response" value="<%= option %>" required>
+                        <label for="<%= option %>"><%= option %></label><br>
+                    <% }); %>
+                <% } %>
+                
+                <input type="submit" value="Soumettre">
+            </form>
+        </div>
+    <% } else { %>
+        <p>Questionnaire complété ! Merci.</p>
+    <% } %>
+</body>
+</html>

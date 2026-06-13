@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Enregistrement Médical</title>
+</html>
+
+<body>
+    <h1>Formulaire d'Enregistrement Médical</h1>
+    <% if (typeof error !== 'undefined') { %>
+        <div style="color: RED;"><%= error %></div>
+    <% } %>
+    
+    <form action="/enregistrement" method="POST">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="nom" value="<% if (typeof nom !== 'undefined') { %><%= nom %><% } %>" required><br><br>
+
+        <label for="prenom">Prenom :</label>
+        <input type="text" id="prenom" name="prenom" value="<% if (typeof prenom !== 'undefined') { %><%= prenom %><% } %>" required><br><br>
+
+        <label for="age">Age :</label>
+        <input type="number" id="age" name="age" value="<% if (typeof age !== 'undefined') { %><%= age %><% } %>" required><br><br>
+
+        <input type="submit" value="Soumettre">
+    </form>
+</body>
