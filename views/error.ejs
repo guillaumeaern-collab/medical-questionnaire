@@ -2,10 +2,23 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Erreur</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Erreur</h1>
-    <p>Une erreur est survenue.</p>
+    <%- include('partials/header') %>
+    <div class="page-shell">
+        <main class="card">
+            <h1 class="page-title">Oups, une erreur est survenue</h1>
+            <p class="message alert">Veuillez revenir à l’accueil ou réessayer plus tard.</p>
+
+            <div class="actions">
+                <a class="btn btn-primary" href="/">Retour à l’accueil</a>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+    </div>
 </body>
 </html>

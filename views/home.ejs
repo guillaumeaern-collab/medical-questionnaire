@@ -2,28 +2,51 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>Bienvenue sur le formulaire d'enregistrement médical</h1>
-    
-    <section>
-        <h2>À propos</h2>
-        <p>Blabla blabla blabla... Complétez votre présentation ici.</p>
-    </section>
+    <%- include('partials/header') %>
+    <div class="page-shell">
+        <main class="card">
+            <h1 class="page-title">Bienvenue sur votre questionnaire médical</h1>
+            <p class="intro" style="text-align: center;">Prenez quelques minutes pour renseigner vos informations et répondre à notre formulaire avec simplicité.</p>
 
-    <section>
-        <h2>Nos activités</h2>
-        <p>Blabla blabla blabla... Décrivez vos activités ici.</p>
-    </section>
+            <section class="section-block">
+                <h2>Nos activités</h2>
+                <p>L’ostéopathie est une approche thérapeutique manuelle douce, fondée sur une vision globale du corps humain. Elle vise à réduire les tensions, les déséquilibres et les douleurs à travers des manipulations du système musculo-squelettique et des techniques de relâchement myofascial.</p>
 
-    <section>
-        <h2>À quoi sert ce questionnaire ?</h2>
-        <p>Blabla blabla blabla... Expliquez l'utilité du questionnaire ici.</p>
-    </section>
+                <details class="activity-expander">
+                    <summary aria-label="Afficher plus d’informations sur les activités">⋯</summary>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <strong>Domaines de prise en charge :</strong>
+                            <span>maux de dos, entorses, stress, règles douloureuses, migraines.</span>
+                        </div>
+                        <div class="activity-item">
+                            <strong>Approche :</strong>
+                            <span>préventive et curative, adaptée à chaque patient.</span>
+                        </div>
+                        <div class="activity-item">
+                            <strong>Patients accueillis :</strong>
+                            <span>nouveaux nés, enfants, sportifs, femmes enceintes, seniors.</span>
+                        </div>
+                    </div>
+                </details>
+            </section>
 
-    <section>
-        <p><a href="/enregistrement">Accéder au questionnaire</a></p>
-    </section>
+            <section class="section-block">
+                <h2>À propos du questionnaire</h2>
+                <p>Ce questionnaire a pour objectif de recueillir des informations essentielles afin de faciliter la future prise en charge de votre dossier. Il permet de préparer votre consultation et de mieux orienter l’évaluation médicale.</p>
+            </section>
+
+            <div class="actions">
+                <a class="btn btn-primary" href="/enregistrement">Accéder au questionnaire</a>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+    </div>
 </body>
 </html>

@@ -1,51 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
-    <title>Questionnaire</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .question { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
-        input[type="text"], select { width: 100%; padding: 8px; margin: 10px 0; }
-        input[type="submit"] { background-color: #4CAF50; color: white; padding: 10px 20px; cursor: pointer; }
-        input[type="submit"]:hover { background-color: #45a049; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body>
-    <h1>Questionnaire Médical</h1>
-    
-    <% if (typeof message !== 'undefined') { %>
-        <p><strong><%= message %></strong></p>
-    <% } %>
+    <%- include('partials/header') %>
+    <div class="page-shell">
+        <main class="card">
+            <h1 class="page-title">Merci pour votre participation</h1>
 
-    <% if (typeof currentQuestion !== 'undefined' && currentQuestion) { %>
-        <div class="question">
-            <h2><%= currentQuestion.label %></h2>
-            
-            <form action="/question-response" method="POST">
-                <input type="hidden" name="questionId" value="<%= currentQuestion.id %>">
-                <input type="hidden" name="nom" value="<%= nom %>">
-                <input type="hidden" name="prenom" value="<%= prenom %>">
-                <input type="hidden" name="age" value="<%= age %>">
-                
-                <% if (currentQuestion.type === 'text') { %>
-                    <label for="response">Votre réponse :</label>
-                    <input type="text" id="response" name="response" placeholder="Entrez votre réponse" required>
-                <% } else if (currentQuestion.type === 'multiple') { %>
-                    <label>Sélectionnez une option :</label><br>
-                    <% currentQuestion.options.forEach(option => { %>
-                        <input type="radio" id="<%= option %>" name="response" value="<%= option %>" required>
-                        <label for="<%= option %>"><%= option %></label><br>
-                    <% }); %>
-                <% } %>
-                
-                <input type="submit" value="Soumettre">
-            </form>
-        </div>
-    <% } else { %>
-        <p>Questionnaire complété ! Merci.</p>
-    <% } %>
+            <% if (typeof message !== 'undefined') { %>
+                <p class="message success"><strong><%= message %></strong></p>
+            <% } %>
+
+            <p class="intro">Votre questionnaire a bien été enregistré. Nous vous remercions pour votre temps.</p>
+
+            <div class="actions">
+                <a class="btn btn-primary" href="/">Retour à l’accueil</a>
+            </div>
+        </main>
+
+        <%- include('partials/footer') %>
+    </div>
 </body>
 </html>
